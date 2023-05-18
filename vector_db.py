@@ -22,7 +22,7 @@ mainClass = "Topic"
 # schema used for DB
 schema = {
     "classes": [{
-    "class":mainClass,
+    "class":"Topic",
     "properties":[
         {
             "dataType":["text"],
@@ -41,7 +41,16 @@ app = Flask(__name__)
 
 def getAllTopics():
     #get all request
-    x = requests.get(baseURL + '/v1/objects?class=Topic&"')
+    x = requests.get(baseURL + '/v1/objects?class=Topic&')
+    return jsonify(x.json())
+
+# route to get all of a spacific class
+@app.route('/vector/getAllOfClass', methods=['POST'])
+
+def getAllOfClass():
+    #get all of a class
+    className = request.json['className']
+    x = requests.get(baseURL + '/v1/objects?class=' + className + '&')
     return jsonify(x.json())
 
 @app.route('/vector/initializeDB', methods=['POST'])
